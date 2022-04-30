@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN' 'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.example.board_pedro.src.item.ItemMapper'>
+
+
+    <select id="getList" parameterType="java.util.LinkedHashMap" resultType="java.util.LinkedHashMap">
+        select board_seq,
+               case
+                   when board_type = 1 then '일반'
+                   else '-' end                               as board_type,
+               title,
+               ifnull(content, '-')                           as content,
+               ifnull(cre_user_id, '-')                       as cre_user_id,
+               ifnull(mod_user_id, '-')                       as mod_user_id,
+               DATE_FORMAT(cre_date, '%Y-%m-%d')              as cre_date,
+               case
+                   when DATE_FORMAT(mod_date, '%Y-%m-%d') = '0000-00-00' then '-'
+                   else DATE_FORMAT(mod_date, '%Y-%m-%d') end as mod_date
+        from tb_board
+        where 1 = 1
+          and content_status = 1
+    </select>
+
+</mapper>
